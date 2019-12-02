@@ -18,8 +18,8 @@ def main(conf_path, args):
     config = configparser.ConfigParser()
     with open(conf_path, 'r') as configfile:
         config.read_file(configfile)
-        source_path =config.get('Path', 'source_date')
-        target_path = config.get('Path', 'target_date')
+        source_path =config.get('Path', 'source_dir')
+        target_path = config.get('Path', 'target_dir')
         date_start = config.get('Changes', 'last_date')
 
     files = os.listdir(source_path)
@@ -30,9 +30,8 @@ def main(conf_path, args):
         dirname = datetime.fromtimestamp(mtime).strftime('%y%m%d')
         target_dir = os.path.join(target_path, dirname)
         date_start_epoch = time.mktime(datetime.strptime(date_start, "%y%m%d").timetuple())
-
-        if mtime >= date_start_epoch:
-
+        date_newdir_epoch = time.mktime(datetime.strptime(dirname, '%y%m%d').timetuple())
+        if date_newdir_epoch > date_start_epoch:
             if not args.dry_run:
                 if not os.path.exists(target_dir):
                     print('making dir: {}'.format(target_dir))
