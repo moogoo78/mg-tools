@@ -1,3 +1,3 @@
-# MG-Tools
+# SH\_e-Tools
 
-- mg-cp-foto
+- she-cp-foto
